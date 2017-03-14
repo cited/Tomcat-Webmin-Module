@@ -1,8 +1,8 @@
 
-# Tomcat Webmin Plugin
+# Tomcat Webmin Module
 
 # Info
-Apache Tomcat Module for Webmin.
+Apache Tomcat Module for Webmin.  Install and Manage Apache Tomcat or Manage Existing Installations.
 
 # How to install via CDN
 
@@ -31,6 +31,7 @@ Tested on Ubuntu 12, 14, and 16
 
 ## **Readhat/Fedora/CentOS**
 Tested on CentOS 6x64 and 7x64
+
 haveged helps Tomcat start much faster.
 
 	yum install epel-release
@@ -62,6 +63,8 @@ The module can also be installed on existing Tomcat installations.  Update the /
 
 ## **Issues**
 Please report issue here or at hello@acugis.com
+
+![tomcat webmin module](https://cdn.acugis.com/apache-tomcat-webmin-plugin/tomcat-module-plugin.gif)
 
 
 
