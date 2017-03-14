@@ -1,0 +1,45 @@
+index_title=Tomcat Server
+index_root=The root directory is $1.
+
+index_start=Start Server
+index_startmsg=Click this button to start the Tomcat server
+index_stop=Stop Server
+index_stopmsg=Click this button to stop the running Tomcat server
+index_return=module index
+
+users_title=Users
+
+wars_title=WARs
+manual_title=Edit config
+manual_ecannot=You are not allowed to edit the Tomcat server.xml config file
+manual_ok=Edit
+manual_efile=Selected file is not part of the Tomcat server configuration
+manual_file=Edit config file:
+manual_edata=Nothing entered!
+manual_err=Failed to save config file
+
+war_install=Install Application
+war_installsource=Install from
+war_local=From local file
+war_uploaded=From uploaded file
+war_ftp=From ftp or http URL
+war_installok=Deploy
+wars_tabinstall=Deploy
+wars_tabdelete=Undeploy
+wars_tablist=List
+wars_desc1=Tomcat applications can be installed using .war files from local or remote locations.
+wars_desc2=After deleting an application, Tomcat server will be restarted. If you keep, the war file, application will be redeployed!
+wars_delete=Delete Application
+wars_deleteok=Undeploy
+wars_rmwar=Remove war file too
+
+install_title=Install WAR
+install_err1=Invalid URL
+install_err2=Failed to install uploaded module
+install_err3=Failed to install module from $1
+install_efile=File does not exist
+install_ebrowser=Your browser does not support file uploads
+
+delete_title=Uninstall WAR
+delete_err=Failed to delete modules
+delete_enone=No modules selected
