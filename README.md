@@ -27,7 +27,7 @@ Upload from Webmin->Webmin Configuration->Webmin Modules
 # Notes
 
 ## **Ubuntu**
-Tested on Ubuntu 12, 14, and 16
+Tested on Ubuntu 12, 14, 15, and 16
 
 ## **Readhat/Fedora/CentOS**
 Tested on CentOS 6x64 and 7x64
@@ -45,12 +45,12 @@ Tested on Debian 7 and 8
 tomcat_env doesn't work, because tomcat service(/usr/local/etc/rc.d/tomcat8) is not sourcing the setenv.sh file. Work around is to set tomcat7_java_opts= in service file.
 
 ## **Arch**
-Install tomcat packages manually and then install module, because Webmin doesn't support pacman
+Install tomcat packages manually and then install module, because Webmin doesn't support pacman. Go to Existing Tomcat Installations below.
 
 	pacman --noconfirm -S tomcat8 tomcat-native jre8-openjdk
 
 ## **OpenSuSe**
-Install tomcat packages manually and then install module
+Install tomcat packages manually and then install module.  Go to Existing Tomcat Installations below.
 
 	zypper -n install tomcat tomcat-webapps tomcat-admin-webapps
 
@@ -59,7 +59,14 @@ Install Tomcat using one of our [scripts](https://github.com/AcuGIS)!
 
 ## **Existing Tomcat Installations**
 
-The module can also be installed on existing Tomcat installations.  Update the /etc/webmin/tomcat/config file to your installation paths.
+The module can also be installed on existing Tomcat installations.  
+
+1.  Install from Webmin->Webmin Configuration->Webmin Modules
+2.  Go to Servers > Apache Tomcat
+3.  Click config icon in top left corner
+4.  Set the paths to those used on your installation
+
+Once you have updated the /etc/webmin/tomcat/config file to your installation paths, you should be able to use all functionality.
 
 ## **Issues**
 Please report issue here or at hello@acugis.com
