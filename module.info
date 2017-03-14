@@ -1,0 +1,3 @@
+desc=Apache Tomcat
+os_support=*-linux freebsd archlinux
+category=servers
