@@ -15,9 +15,9 @@ md5: https://cdn.acugis.com/apache-tomcat-webmin-plugin/acugis-tomcat-webmin-plu
 # How to install from GIT
 Archive module
 
-$ git clone https://github.com/AcuGIS/Tomcat-Webmin-Plugin
+$ git clone https://github.com/AcuGIS/Tomcat-Webmin-Module
 
-$ mv Tomcat-Webmin-Plugin tomcat
+$ mv Tomcat-Webmin-Module tomcat
 
 $ tar -cvzf tomcat.wbm.gz /tomcat
 
