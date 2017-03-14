@@ -1,0 +1,8 @@
+tomcat_config=/etc/webmin/tomcat/config
+tomcat_path=/usr/sbin/tomcat
+tomcat_etc=/etc/tomcat
+tomcat_env=/etc/tomcat/tomcat.conf
+tomcat_pkg=tomcat-admin-webapps
+tomcat_webapps=/var/lib/tomcat/webapps
+start_cmd=/sbin/service tomcat start
+stop_cmd=/sbin/service tomcat stop

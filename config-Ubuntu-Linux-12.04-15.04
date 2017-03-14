@@ -1,0 +1,8 @@
+tomcat_config=/etc/webmin/tomcat/config
+tomcat_path=/usr/share/tomcat7/bin/catalina.sh
+tomcat_etc=/etc/tomcat7
+tomcat_env=/usr/share/tomcat7/bin/setenv.sh
+tomcat_pkg=tomcat7 tomcat7-admin haveged
+tomcat_webapps=/var/lib/tomcat7/webapps/
+start_cmd=service tomcat7  start
+stop_cmd=service tomcat7 stop

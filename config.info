@@ -1,0 +1,8 @@
+tomcat_config=Path to the Webmin Tomcat module config file,8
+tomcat_path=Full path to the Tomcat binary,0
+tomcat_etc=Path to the Tomcat server configuration directory,7
+tomcat_env=Path to Tomcat environment/options file, 0
+tomcat_pkg=Name of package in yum, that provides tomcat
+start_cmd=Command used to start Tomcat server
+stop_cmd=Command used to stop Tomcat server
+tomcat_webapps=Directory for Tomcat web applications,7

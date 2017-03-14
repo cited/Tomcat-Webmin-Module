@@ -1,0 +1,8 @@
+tomcat_config=/usr/local/etc/webmin/tomcat/config
+tomcat_path=/usr/local/apache-tomcat-8.0/bin/catalina.sh
+tomcat_etc=/usr/local/apache-tomcat-8.0/conf
+tomcat_env=/usr/local/apache-tomcat-8.0/bin/setenv.sh
+tomcat_pkg=tomcat8 tomcat-native
+tomcat_webapps=/usr/local/apache-tomcat-8.0/webapps/
+start_cmd=
+stop_cmd=
