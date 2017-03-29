@@ -88,3 +88,11 @@ Tomcat Module WAR Manager:
 Tomcat Module Configuration Editor:
 
 ![tomcat webmin module edit configs](https://cdn.acugis.com/apache-tomcat-webmin-plugin/tomcat-module-edit-configs.gif)
+
+
+Copyright
+---------
+
+* Copyright AcuGIS, 2017
+* Copyright Cited, Inc., 2017
+
