@@ -92,6 +92,29 @@ sub sort_version {
 	return 0;
 }
 
+sub latest_tomcat_version{
+	my $tomcat_ver = $_[0];
+	my %version;
+	if(-f "$module_config_directory/version"){
+		read_file_cached("$module_config_directory/version", \%version);
+
+		if(	$version{'updated'} >= (time() - 86400)){	#if last update was less than a day ago
+			return $version{'latest'} if ($version{'latest'} ne '0.0.0');
+		}
+	}
+
+  my $major = (split /\./, $tomcat_ver)[0];
+  my @all_ver = &major_tomcat_versions($major);
+  my $latest_ver = $all_ver[-1];
+
+	#renew the updated timestamp and latest version
+	$version{'updated'} = time();
+	$version{'latest'} = $latest_ver;
+	&write_file("$module_config_directory/version", \%version);
+
+	return $latest_ver;
+}
+
 sub installed_tomcat_version(){
 	my %os_env;
 	read_env_file('/etc/environment', \%os_env);
@@ -107,6 +130,61 @@ sub installed_tomcat_version(){
 sub get_catalina_home(){
 	my $tomcat_ver = installed_tomcat_version();
 	return "/home/tomcat/apache-tomcat-$tomcat_ver";
+}
+
+sub download_and_install{
+	my $tomcat_ver = $_[0];
+	my $major;
+
+	#download tomcat archive
+  $major = substr($tomcat_ver, 0,1);
+  $in{'url'} = "http://archive.apache.org/dist/tomcat/tomcat-$major/v$tomcat_ver/bin/apache-tomcat-$tomcat_ver.tar.gz";
+  $in{'source'} = 2;
+
+	my $tmpfile = process_file_source();
+
+	#extract tomcat archive
+	my $cmd_out='';
+	my $cmd_err='';
+	print "<hr>Extracting to /home/tomcat/apache-tomcat-$tomcat_ver/ ...<br>";
+	local $out = &execute_command("tar -x -v --overwrite -f \"$tmpfile\" -C/home/tomcat/", undef, \$cmd_out, \$cmd_err, 0, 0);
+
+	if($cmd_err ne ""){
+		&error("Error: tar: $cmd_err");
+	}else{
+		$cmd_out = s/\n/<br>/g;
+		print &html_escape($cmd_out);
+		print "Done<br>";
+	}
+
+	#folder is created after tomcat is started, but we need it now
+	&make_dir("/home/tomcat/apache-tomcat-$tomcat_ver/conf/Catalina/localhost/", 0755, 1);
+
+	open(my $fh, '>', "/home/tomcat/apache-tomcat-$tomcat_ver/conf/Catalina/localhost/manager.xml") or die "open:$!";
+	print $fh <<EOF;
+<Context privileged="true" antiResourceLocking="false" docBase="\${catalina.home}/webapps/manager">
+	<Valve className="org.apache.catalina.valves.RemoteAddrValve" allow="^.*\$" />
+</Context>
+EOF
+	close $fh;
+
+	#&set_ownership_permissions('tomcat','tomcat', undef, "/home/tomcat/apache-tomcat-$tomcat_ver/");
+	&execute_command("chown -R tomcat:tomcat /home/tomcat/apache-tomcat-$tomcat_ver");
+
+	return $tomcat_ver;
+}
+
+sub setup_catalina_env{
+	my $tomcat_ver = $_[0];
+
+	my %os_env;
+
+	print "<hr>Setting CATALINA environment...<br>";
+
+	read_env_file('/etc/environment', \%os_env);
+	$os_env{'CATALINA_HOME'} = "/home/tomcat/apache-tomcat-$tomcat_ver/";
+	$os_env{'CATALINA_BASE'} = "/home/tomcat/apache-tomcat-$tomcat_ver/";
+	write_env_file('/etc/environment', \%os_env, 0);
 }
 
 sub get_installed_libs{
@@ -167,4 +245,35 @@ sub process_file_source{
 		&inst_error($error) if ($error);
 	}
 	return $file;
+}
+
+sub get_tomcat_major_versions(){
+	my @majors = ('8', '7','6', '9');
+	return @majors;
+}
+
+sub major_tomcat_versions{
+	my $major = $_[0];	#Tomcat major version 6,7,8,9
+
+	my $url = "http://archive.apache.org/dist/tomcat/tomcat-$major/";
+	&error_setup(&text('install_err3', $url));
+	my $error = '';
+	my $tmpfile = &transname('tomcat.html');
+
+
+	&http_download('archive.apache.org', 80, "/dist/tomcat/tomcat-$major/", $tmpfile, \$error);
+	if($error){
+		error($error);
+	}
+
+	my @latest_versions;
+	open(my $fh, '<', $tmpfile) or die "open:$!";
+	while(my $line = <$fh>){
+		if($line =~ /<a\s+href="v($major\.[0-9\.]+)\/">v[0-9\.]+\/<\/a>/){
+			push(@latest_versions, $1);
+		}
+	}
+	close $fh;
+
+	return sort sort_version @latest_versions;
 }
