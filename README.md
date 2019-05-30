@@ -31,7 +31,7 @@ Go to Servers->Apache Tomcat (you may need to refresh page)
 # Notes
 
 ## **Ubuntu**
-Tested on Ubuntu 12, 14, 15, and 16
+Tested on Ubuntu 14, 16, and 18
 
 ## **Readhat/Fedora/CentOS**
 Tested on CentOS 6x64 and 7x64
@@ -43,7 +43,7 @@ haveged helps Tomcat start much faster.
 	chkconfig haveged on
   
 ## **Debian**
-Tested on Debian 7 and 8
+Tested on Debian 8 and 9
 
 ## **FreeBSD**
 tomcat_env doesn't work, because tomcat service(/usr/local/etc/rc.d/tomcat8) is not sourcing the setenv.sh file. Work around is to set tomcat7_java_opts= in service file.
@@ -93,6 +93,6 @@ Tomcat Module Configuration Editor:
 Copyright
 ---------
 
-* Copyright AcuGIS, 2017
-* Copyright Cited, Inc., 2017
+* Copyright AcuGIS, 2019
+* Copyright Cited, Inc., 2019
 
