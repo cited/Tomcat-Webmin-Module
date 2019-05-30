@@ -21,13 +21,9 @@ print &ui_table_start($text{'war_install'}, undef, 2);
 
 print &ui_table_row($text{'war_installsource'},
 	&ui_radio_table("source", 0,
-		[ [ 0, $text{'war_local'},
-		    &ui_textbox("file", undef, 40)." ".
-		    &file_chooser_button("file", 0) ],
-		  [ 1, $text{'war_uploaded'},
-		    &ui_upload("upload", 40) ],
-		  [ 2, $text{'war_ftp'},
-		    &ui_textbox("url", undef, 40) ]
+		[ [ 0, $text{'source_local'}, &ui_textbox("file", undef, 40)." ". &file_chooser_button("file", 0) ],
+		  [ 1, $text{'source_uploaded'}, &ui_upload("upload", 40) ],
+		  [ 2, $text{'source_ftp'},&ui_textbox("url", undef, 40) ]
 	    ]));
 
 print &ui_table_end();
@@ -47,7 +43,7 @@ print &ui_table_start($text{'wars_delete'}, undef, 2);
 foreach $d (@wlist) {
 	push(@opts, [ $d, $d ]);
 }
-print &ui_table_row(undef,
+print &ui_table_row($text{'wars_installed'},
 	&ui_select("mod", undef, \@opts, 10, 1)."<br>\n".
 	&ui_checkbox("rmwar", 1, $text{'wars_rmwar'}, 0), 2);
 

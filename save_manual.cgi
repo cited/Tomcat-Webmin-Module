@@ -5,12 +5,14 @@ require './tomcat-lib.pl';
 &error_setup($text{'manual_err'});
 &ReadParseMime();
 
+my $catalina_home = get_catalina_home();
+
 # Work out the file
-@files = (	 "$config{'tomcat_env'}",
-			"$config{'tomcat_etc'}/context.xml",
-			"$config{'tomcat_etc'}/server.xml",
-			"$config{'tomcat_etc'}/tomcat-users.xml",
-			"$config{'tomcat_etc'}/web.xml");
+@files = (	"$catalina_home/bin/setenv.sh",
+			"$catalina_home/conf/context.xml",
+			"$catalina_home/conf/server.xml",
+			"$catalina_home/conf/tomcat-users.xml",
+			"$catalina_home/conf/web.xml");
 &indexof($in{'file'}, @files) >= 0 || &error($text{'manual_efile'});
 $in{'data'} =~ s/\r//g;
 $in{'data'} =~ /\S/ || &error($text{'manual_edata'});

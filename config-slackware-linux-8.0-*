@@ -1,8 +1,0 @@
-tomcat_config=/etc/webmin/tomcat/config
-tomcat_path=/usr/share/tomcat/bin/catalina.sh
-tomcat_etc=/etc/tomcat
-tomcat_env=/etc/tomcat/tomcat-java.conf
-tomcat_webapps=/var/lib/tomcat/webapps
-tomcat_pkg=
-start_cmd=/etc/rc.d/rc.tomcat start
-stop_cmd=/etc/rc.d/rc.tomcat stop

@@ -5,19 +5,20 @@ require './tomcat-lib.pl';
 &ReadParse();
 &ui_print_header(undef, $text{'manual_title'}, "");
 
+my $catalina_home = get_catalina_home();
+
 # Work out and show the files
-@files = (  "$config{'tomcat_env'}",
-			"$config{'tomcat_etc'}/context.xml",
-			"$config{'tomcat_etc'}/server.xml",
-			"$config{'tomcat_etc'}/tomcat-users.xml",
-			"$config{'tomcat_etc'}/web.xml");
+@files = (	"$catalina_home/bin/setenv.sh",
+			"$catalina_home/conf/context.xml",
+			"$catalina_home/conf/server.xml",
+			"$catalina_home/conf/tomcat-users.xml",
+			"$catalina_home/conf/web.xml");
 $in{'file'} ||= $files[0];
 &indexof($in{'file'}, @files) >= 0 || &error($text{'manual_efile'});
 
 print &ui_form_start("edit_manual.cgi");
 print "<b>$text{'manual_file'}</b>\n";
-print &ui_select("file", $in{'file'},
-		 [ map { [ $_ ] } @files ]),"\n";
+print &ui_select("file", $in{'file'}, [ map { [ $_ ] } @files ], 1, 0);
 print &ui_submit($text{'manual_ok'});
 print &ui_form_end();
 

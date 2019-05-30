@@ -1,0 +1,2 @@
+tomcat_config=Path to the Webmin Tomcat module config file,8
+tomcat_service=Path to tomcat service command,8

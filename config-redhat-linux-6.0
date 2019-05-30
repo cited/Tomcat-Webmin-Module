@@ -1,8 +1,0 @@
-tomcat_config=/etc/webmin/tomcat/config
-tomcat_path=/usr/sbin/tomcat6
-tomcat_etc=/etc/tomcat6
-tomcat_env=/etc/tomcat6/tomcat6.conf
-tomcat_pkg=tomcat6-admin-webapps tomcat6-webapps
-tomcat_webapps=/var/lib/tomcat6/webapps
-start_cmd=/sbin/service tomcat6 start
-stop_cmd=/sbin/service tomcat6 stop

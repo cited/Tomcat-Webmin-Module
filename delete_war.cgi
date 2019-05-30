@@ -11,45 +11,29 @@ use File::Path 'rmtree';
 @mods = split(/\0/, $in{'mod'});
 @mods || &error($text{'delete_enone'});
 
-#stop tomcat server
-$err = stop_tomcat();
-print "Stopping Tomcat server<br>";
-&webmin_log("stop");
-if ($err){
-	&error($err);
-	&ui_print_footer("", $text{'index_return'});
-	exit;
-}
+tomcat_service_ctl('stop');
 
 #delete each of the specified directories
+my $catalina_home = get_catalina_home();
 foreach $d (@mods) {
-	print "Removing $config{'tomcat_webapps'}/$d<br>";
-	if(rmtree("$config{'tomcat_webapps'}/$d") == 0){
+	print "Removing $catalina_home/$d<br>";
+	if(rmtree("$catalina_home/webapps/$d") == 0){
 		&error("Failed to remove application");
 		&ui_print_footer("", $text{'index_return'});
 		exit;
 	}
 
 	if($in{'rmwar'}){
-		$war = "$config{'tomcat_webapps'}/$d.war";
+		$war = "$catalina_home/webapps/$d.war";
 		if( -f $war){
 			unlink($war);
-			print "<tt>Removed $war<tt><br>";
+			print "<tt>Removed $war</tt><br>";
 		}
 	}
 }
-
-#start tomcat server
-$err = start_tomcat();
-print "Starting Tomcat server<br>";
-&webmin_log("start");
-if ($err){
-	&error($err);
-	&ui_print_footer("", $text{'index_return'});
-	exit;
-}
 print "Uninstall successful<br>";
 
+tomcat_service_ctl('start');
 
 &ui_print_footer("", $text{'index_return'});
 

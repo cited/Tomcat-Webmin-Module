@@ -1,8 +1,0 @@
-tomcat_config=/etc/webmin/tomcat/config
-tomcat_path=/usr/share/tomcat8/bin/catalina.sh
-tomcat_etc=/etc/tomcat8
-tomcat_env=/usr/share/tomcat8/bin/setenv.sh
-tomcat_pkg=tomcat8
-tomcat_webapps=/var/lib/tomcat8/webapps
-start_cmd=systemctl start tomcat8
-stop_cmd=systemctl stop tomcat8
