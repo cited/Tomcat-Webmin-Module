@@ -50,7 +50,7 @@ sub setup_tomcat_service{
 sub install_tomcat_from_archive{
 
 	add_tomcat_user();
-	my $tomcat_ver = download_and_install();
+	my $tomcat_ver = download_and_install($in{'source_archive'});
 
 	setup_catalina_env($tomcat_ver);
 	setup_tomcat_users($tomcat_ver);
@@ -151,7 +151,7 @@ EOF
 
 	print &ui_table_row($text{'base_installsource'},
 		&ui_radio_table("source", 100,
-			[ [ 100, $text{'source_archive'},  &ui_select("source_archive", undef, \@tver_opts,1, 0)],
+			[ [ 100, $text{'base_archive'},  &ui_select("source_archive", undef, \@tver_opts,1, 0)],
 			  [ 0, $text{'source_local'}, &ui_textbox("file", undef, 40)." ". &file_chooser_button("file", 0) ],
 			  [ 1, $text{'source_uploaded'}, &ui_upload("upload", 40) ],
 			  [ 2, $text{'source_ftp'},&ui_textbox("url", undef, 40) ]

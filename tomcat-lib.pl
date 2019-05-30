@@ -206,14 +206,14 @@ sub process_file_source{
 		&error_setup(&text('source_err0', $in{'file'}));
 		$file = $in{'file'};
 		if (!(-r $file)){
-			&inst_error($text{'source_err0'});
+			&error($text{'source_err0'});
 		}
 
 	}elsif (($in{'source'} == 1) && ($in{'upload_filename'} ne "")) {	# from uploaded file
 		&error_setup($text{'source_err1'});
 		$need_unlink = 1;
 		if ($no_upload) {
-			&inst_error($text{'source_err1.2'});
+			&error($text{'source_err1.2'});
 		}
 		$file = transname(file_basename($in{'upload_filename'}));
 		open(MOD, ">$file");
@@ -240,9 +240,9 @@ sub process_file_source{
 			$host = $1; $ffile = $3;
 			&ftp_download($host, $ffile, $file, \$error, \&progress_callback);
 		}else {
-			&inst_error($text{'source_err3'});
+			&error($text{'source_err3'});
 		}
-		&inst_error($error) if ($error);
+		&error($error) if ($error);
 	}
 	return $file;
 }
