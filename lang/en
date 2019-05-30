@@ -5,7 +5,7 @@ index_start=Start Server
 index_startmsg=Click this button to start the Tomcat server
 index_stop=Stop Server
 index_stopmsg=Click this button to stop the running Tomcat server
-index_return=module index
+index_return=Tomcat
 index_install=Install Tomcat
 
 users_title=Users
