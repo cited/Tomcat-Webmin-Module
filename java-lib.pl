@@ -186,10 +186,11 @@ sub get_installed_openjdk_versions{
 
 sub get_installed_oracle_jdk_versions{
 	my @dirs;
-  opendir(DIR, '/usr/java/') or return @dirs;
-  @dirs	= grep {
-			/^jdk-[0-9\.]+/
-			&& -d "/usr/java/$_"
+    opendir(DIR, '/usr/java/') or return @dirs;
+    @dirs
+        = grep {
+	    /^jdk[0-9\.\-_]+/
+          && -d "/usr/java/$_"
 	} readdir(DIR);
   closedir(DIR);
 
@@ -228,8 +229,9 @@ sub get_java_version(){
 }
 
 sub get_java_home(){
-	my %jdk_ver = get_java_version();
-	return '/usr/java/jdk-'.$jdk_ver{'full'};
+	my $java_path = &resolve_links('/usr/bin/java');
+	$java_path =~ s/\/bin\/java//;
+	return $java_path;
 }
 
 sub set_default_java{
