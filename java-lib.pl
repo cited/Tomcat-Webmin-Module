@@ -228,8 +228,9 @@ sub get_java_version(){
 }
 
 sub get_java_home(){
-	my %jdk_ver = get_java_version();
-	return '/usr/java/jdk-'.$jdk_ver{'full'};
+	my $java_path = &resolve_links('/usr/bin/java');
+	$java_path =~ s/\/bin\/java//;
+	return $java_path;
 }
 
 sub set_default_java{
