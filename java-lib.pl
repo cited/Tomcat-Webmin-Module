@@ -186,10 +186,11 @@ sub get_installed_openjdk_versions{
 
 sub get_installed_oracle_jdk_versions{
 	my @dirs;
-  opendir(DIR, '/usr/java/') or return @dirs;
-  @dirs	= grep {
-			/^jdk-[0-9\.]+/
-			&& -d "/usr/java/$_"
+    opendir(DIR, '/usr/java/') or return @dirs;
+    @dirs
+        = grep {
+	    /^jdk[0-9\.\-_]+/
+          && -d "/usr/java/$_"
 	} readdir(DIR);
   closedir(DIR);
 
