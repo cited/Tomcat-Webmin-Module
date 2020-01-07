@@ -10,35 +10,21 @@
 
 # Source function library.
 . /etc/environment;	#Catalina variables
+. $CATALINA_HOME/bin/setenv.sh
 
 RETVAL=$?
 
 function start(){
-	if [ -z "${TOMCAT_PID}" -a -f $CATALINA_HOME/bin/startup.sh ]; then
-		echo "Starting Tomcat"
-		/bin/su - tomcat $CATALINA_HOME/bin/startup.sh
-	fi
+	echo "Starting Tomcat"
+	/bin/su - tomcat $CATALINA_HOME/bin/startup.sh
 	RETVAL=$?
 }
 
 function stop(){
-	if [ "${TOMCAT_PID}" -a -f $CATALINA_HOME/bin/shutdown.sh ]; then
-		echo "Stopping Tomcat"
-		/bin/su - tomcat $CATALINA_HOME/bin/shutdown.sh
-
-		#Wait at most 10 second for Tomcat to stop
-		COUNTER=10
-		TOMCAT_PID=$(ps -axww | grep tomcat | grep java | grep -v grep | awk '{print $1}');
-		while [ "${TOMCAT_PID}" -a $COUNTER -gt 0 ]; do
-			sleep 1;
-			TOMCAT_PID=$(ps -axww | grep tomcat | grep java | grep -v grep | awk '{print $1}');
-			let COUNTER=COUNTER-1
-		done
-	fi
+	echo "Stopping Tomcat"
+	/bin/su - tomcat -c "$CATALINA_HOME/bin/shutdown.sh 60 -force"
 	RETVAL=$?
 }
-
-TOMCAT_PID=$(ps -axww | grep tomcat | grep java | grep -v grep | awk '{print $1}');
 
 case "$1" in
  start)
@@ -49,12 +35,13 @@ case "$1" in
         ;;
  restart)
 		echo "Restarting Tomcat"
-        stop;
-        TOMCAT_PID='';
-        start;
+    stop;
+		start;
         ;;
  status)
-		if [ "${TOMCAT_PID}" ]; then
+
+		if [ -f "${CATALINA_PID}" ]; then
+			TOMCAT_PID=$(cat "${CATALINA_PID}")
 			echo "Tomcat is running with PID ${TOMCAT_PID}";
 			RETVAL=1
 		else
