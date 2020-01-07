@@ -179,12 +179,16 @@ sub setup_catalina_env{
 
 	my %os_env;
 
-	print "<hr>Setting CATALINA environment...<br>";
+	print "<hr>Setting CATALINA environment...";
 
 	read_env_file('/etc/environment', \%os_env);
 	$os_env{'CATALINA_HOME'} = "/home/tomcat/apache-tomcat-$tomcat_ver/";
 	$os_env{'CATALINA_BASE'} = "/home/tomcat/apache-tomcat-$tomcat_ver/";
 	write_env_file('/etc/environment', \%os_env, 0);
+
+	open(my $fh, '>>', "/home/tomcat/apache-tomcat-$tomcat_ver/bin/setenv.sh") or die "open:$!";
+	print $fh "CATALINA_PID=\"/home/tomcat/apache-tomcat-$tomcat_ver/temp/tomcat.pid\"";
+	close $fh;
 }
 
 sub get_installed_libs{
