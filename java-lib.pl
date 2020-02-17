@@ -95,6 +95,10 @@ sub get_latest_jdk_version(){
 	&http_download("www.oracle.com", 443, "/technetwork/java/javase/downloads/index.html", $tmpfile, \$error,
 					undef, 1, undef, 0, 0, 1);
 
+  if(! -f $tmpfile){
+    return %java_tar_gz;
+  }
+
 	my $jdk_mv = 12;	#JDK major version
 	my $download_num = '';
 	open(my $fh, '<', $tmpfile) or die "open:$!";
@@ -113,7 +117,9 @@ sub get_latest_jdk_version(){
 	my %cookie_headers = ('Cookie'=> 'oraclelicense=accept-securebackup-cookie');
 	&http_download("www.oracle.com", 443,"/technetwork/java/javase/downloads/jdk$jdk_mv-downloads-$download_num.html",
 					$tmpfile, \$error, undef, 1, undef, undef, 0, 0, 1, \%cookie_headers);
-
+  if(! -f $tmpfile){
+		return %java_tar_gz;
+	}
 
 	open($fh, '<', $tmpfile) or die "open:$!";
 	while(my $line = <$fh>){
