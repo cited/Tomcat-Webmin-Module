@@ -252,7 +252,7 @@ sub process_file_source{
 }
 
 sub get_tomcat_major_versions(){
-	my @majors = ('8', '7','6', '9');
+	my @majors = ('9','8', '7','6');
 	return @majors;
 }
 

@@ -162,7 +162,7 @@ EOF
 
 	my @tver = &major_tomcat_versions($sel_tmver);
 	my @tver_opts = ( );
-	foreach my $v (@tver) {
+	foreach my $v (reverse @tver) {
 		push(@tver_opts, [ $v, $v ]);
 	}
 
