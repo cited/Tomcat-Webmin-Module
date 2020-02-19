@@ -2,6 +2,8 @@
 Installation
 ============
 
+The preferred method is installing via GIT.
+
 Install the package with GIT::
 
     $ git clone https://github.com/AcuGIS/Tomcat-Webmin-Module
