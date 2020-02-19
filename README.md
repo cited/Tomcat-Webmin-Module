@@ -1,7 +1,7 @@
 
 # Tomcat Webmin Module
 
-https://readthedocs.org/projects/pip/badge/?version=latest&style=plastic
+https://readthedocs.org/projects/tomcat-webmin-module/badge/?version=latest&style=flat
 
 # Info
 Apache Tomcat Module for Webmin.  Install and Manage Apache Tomcat or Manage Existing Installations.
