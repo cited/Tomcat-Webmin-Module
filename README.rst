@@ -1,14 +1,21 @@
-Template
-========
+Apache Tomcat Webmin Module
+===========================
 
-$project will solve your problem of where to start with documentation,
-by providing a basic explanation of how to do it easily.
+Apache Tomcat Module for Webmin. 
+Install and Manage Apache Tomcat or Manage Existing Installations.
+
 
 Look how easy it is to use:
 
-    import project
-    # Get your stuff done
-    project.do_stuff()
+    $ git clone https://github.com/AcuGIS/Tomcat-Webmin-Module
+
+    $ mv Tomcat-Webmin-Module tomcat
+
+    $ tar -cvzf tomcat.wbm.gz tomcat/
+
+Upload from Webmin->Webmin Configuration->Webmin Modules
+
+Go to Servers->Apache Tomcat (you may need to refresh page)
 
 Features
 --------
