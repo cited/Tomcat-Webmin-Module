@@ -1,5 +1,5 @@
 
-# Tomcat Webmin Module
+Tomcat Webmin Module
 
 # Info
 Apache Tomcat Module for Webmin.  Install and Manage Apache Tomcat or Manage Existing Installations.
