@@ -9,7 +9,8 @@ Install the package with GIT::
     $ mv Tomcat-Webmin-Module tomcat
 
     $ tar -cvzf tomcat.wbm.gz tomcat/
+    
+    
+Upload from Webmin->Webmin Configuration->Webmin Modules
 
-    Upload from Webmin->Webmin Configuration->Webmin Modules
-
-    Go to Servers->Apache Tomcat (you may need to refresh page)
+Go to Servers->Apache Tomcat (you may need to refresh page)
