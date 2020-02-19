@@ -18,7 +18,7 @@ Go to Servers->Apache Tomcat (you may need to refresh page)
 # How to install from GIT
 Archive module
 
-$ git clone https://github.com/AcuGIS/Tomcat-Webmin-Module
+$ git clone https://github.com/cited/Tomcat-Webmin-Module
 
 $ mv Tomcat-Webmin-Module tomcat
 
