@@ -2,39 +2,39 @@ Apache Tomcat Webmin Module
 ===========================
 
 Apache Tomcat Module for Webmin. 
+
 Install and Manage Apache Tomcat or Manage Existing Installations.
-
-
-Look how easy it is to use:
-
-    $ git clone https://github.com/AcuGIS/Tomcat-Webmin-Module
-
-    $ mv Tomcat-Webmin-Module tomcat
-
-    $ tar -cvzf tomcat.wbm.gz tomcat/
-
-Upload from Webmin->Webmin Configuration->Webmin Modules
-
-Go to Servers->Apache Tomcat (you may need to refresh page)
 
 Features
 --------
 
-- Be awesome
-- Make things faster
+- Install Tomcat
+- Install JDK
+- Stop, Start, and Restart Tomcat
+- Edit Main Config Files
+- Deploy WARS
 
 Installation
 ------------
 
-Install $project by running:
+The preferred method is installing via GIT.
 
-    install project
+    $ git clone https://github.com/cited/Tomcat-Webmin-Module
+
+    $ mv Tomcat-Webmin-Module tomcat
+
+    $ tar -cvzf tomcat.wbm.gz tomcat/
+    
+    
+Upload from Webmin->Webmin Configuration->Webmin Modules
+
+Go to Servers->Apache Tomcat (you may need to refresh page)
 
 Contribute
 ----------
 
-- Issue Tracker: github.com/$project/$project/issues
-- Source Code: github.com/$project/$project
+- Issue Tracker: github.com/cited/Tomcat-Webmin-Module/issues
+- Source Code: github.com/cited/Tomcat-Webmin-Module
 
 Support
 -------
