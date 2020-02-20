@@ -15,10 +15,10 @@ Contents:
 
 
 
-Indices and tables
+&copy; Cited, Inc.
 ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+`Cited, Inc. <https://www.citedcorp.com>`_
+
+
 
