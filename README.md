@@ -20,7 +20,7 @@ Archive module
 
 $ git clone https://github.com/cited/Tomcat-Webmin-Module
 
-$ mv Tomcat-Webmin-Module tomcat
+$ mv Tomcat-Webmin-Module-master tomcat
 
 $ tar -cvzf tomcat.wbm.gz tomcat/
 
