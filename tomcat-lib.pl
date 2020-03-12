@@ -187,7 +187,7 @@ sub setup_catalina_env{
 	write_env_file('/etc/environment', \%os_env, 0);
 
 	open(my $fh, '>>', "/home/tomcat/apache-tomcat-$tomcat_ver/bin/setenv.sh") or die "open:$!";
-	print $fh "CATALINA_PID=\"/home/tomcat/apache-tomcat-$tomcat_ver/temp/tomcat.pid\"";
+	print $fh "CATALINA_PID=\"/home/tomcat/apache-tomcat-$tomcat_ver/temp/tomcat.pid\"\n";
 	close $fh;
 }
 
