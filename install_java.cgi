@@ -55,16 +55,7 @@ else {
 &ui_print_header(undef, $text{'java_title'}, "");
 
 my $jdk_path = '';
-if ($in{'source'} == 100) {
-
-	my ($jdk_name, $url) = split /=/, $in{'jdk_ver'};
-	$in{'url'} = $url;
-	$in{'source'} = 2;
-
-	my $jdk_archive = process_file_source();
-	$jdk_path    = extract_java_archive($jdk_archive);
-
-}elsif($in{'source'} == 200){
+if($in{'source'} == 200){
 
 	my $jdk_name = (split /=/, $in{'openjdk_ver'})[1];
 	my $openjdk_pkg = $jdk_name;
@@ -74,6 +65,16 @@ if ($in{'source'} == 100) {
 
 	software::update_system_install($openjdk_pkg, undef);
 	$jdk_path = get_jdk_dir_by_name($jdk_name);
+
+} else {
+	if ($in{'source'} == 100) {
+
+		my ($jdk_name, $url) = split /=/, $in{'jdk_ver'};
+		$in{'url'} = $url;
+		$in{'source'} = 2;
+	}
+	my $jdk_archive = process_file_source();
+	$jdk_path    = extract_java_archive($jdk_archive);
 }
 
 if($in{'def_jdk'} == 1){
