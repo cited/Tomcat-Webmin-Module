@@ -28,7 +28,7 @@ chmod +x pre-install.sh
 
 Go to Servers->Apache Tomcat to complete set up using the setup Wizard.
 
-# How to install from GIT
+# Install via GIT
 
 As Root:
 
