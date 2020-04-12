@@ -5,7 +5,7 @@
 # Info
 Apache Tomcat Module for Webmin.  Install and Manage Apache Tomcat or Manage Existing Installations.
 
-# How to install via CDN
+# Install via CDN
 
 Webmin->Webmin Configuration->Webmin Modules->From ftp or http URL
 
