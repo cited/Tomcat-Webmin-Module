@@ -13,15 +13,25 @@ URL: http://github.com/cited/Tomcat-Webmin-Module/raw/master/scripts/tomcat.wbm.
 
 Go to Servers->Apache Tomcat (you may need to refresh page)
 
+# Install via Script
+
+As Root:
+
+```bash
+wget https://raw.githubusercontent.com/cited/Certbot-Webmin-Module/master/scripts/pre-install.sh
+chmod +x pre-install.sh
+./pre-install.sh
+```
+
 # How to install from GIT
-Archive module
 
-$ git clone https://github.com/cited/Tomcat-Webmin-Module
+As Root:
 
-$ mv Tomcat-Webmin-Module-master tomcat
-
-$ tar -cvzf tomcat.wbm.gz tomcat/
-
+```bash
+git clone https://github.com/cited/Tomcat-Webmin-Module
+mv Tomcat-Webmin-Module-master tomcat
+tar -cvzf tomcat.wbm.gz tomcat/
+```
 
 Upload from Webmin->Webmin Configuration->Webmin Modules
 
@@ -92,6 +102,6 @@ Tomcat Module Configuration Editor:
 Copyright
 ---------
 
-* Copyright AcuGIS, 2019
-* Copyright Cited, Inc., 2019
+* Copyright AcuGIS, 2020
+* Copyright Cited, Inc., 2020
 
