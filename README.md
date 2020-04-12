@@ -3,7 +3,10 @@
 
 [![Documentation Status](https://readthedocs.org/projects/tomcat-webmin-module/badge/?version=latest)](https://tomcat-module.citedcorp.com/en/latest/?badge=latest)
 # Info
-Apache Tomcat Module for Webmin.  Install and Manage Apache Tomcat or Manage Existing Installations.
+
+Apache Tomcat Module for Webmin.  
+
+Install and Manage Apache Tomcat or Manage Existing Installations.
 
 # Install via CDN
 
