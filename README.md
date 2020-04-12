@@ -9,9 +9,7 @@ Apache Tomcat Module for Webmin.  Install and Manage Apache Tomcat or Manage Exi
 
 Webmin->Webmin Configuration->Webmin Modules->From ftp or http URL
 
-URL: https://cdn.acugis.com/apache-tomcat-webmin-plugin/tomcat.wbm.gz
-
-md5: https://cdn.acugis.com/apache-tomcat-webmin-plugin/acugis-tomcat-webmin-plugin.txt
+URL: http://github.com/cited/Tomcat-Webmin-Module/raw/master/scripts/tomcat.wbm.gz
 
 Go to Servers->Apache Tomcat (you may need to refresh page)
 
