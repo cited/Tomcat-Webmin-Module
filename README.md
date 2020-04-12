@@ -11,7 +11,7 @@ Webmin->Webmin Configuration->Webmin Modules->From ftp or http URL
 
 URL: http://github.com/cited/Tomcat-Webmin-Module/raw/master/scripts/tomcat.wbm.gz
 
-Go to Servers->Apache Tomcat (you may need to refresh page)
+Go to Servers->Apache Tomcat to complete set up using the setup Wizard (you may need to refresh page).
 
 # Install via Script
 
@@ -22,6 +22,8 @@ wget https://raw.githubusercontent.com/cited/Certbot-Webmin-Module/master/script
 chmod +x pre-install.sh
 ./pre-install.sh
 ```
+
+Go to Servers->Apache Tomcat to complete set up using the setup Wizard.
 
 # How to install from GIT
 
