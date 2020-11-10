@@ -102,33 +102,36 @@ sub get_latest_jdk_version(){
 	my %jdk_mv;	#JDK major versions
 	open(my $fh, '<', $tmpfile) or die "open:$!";
 	while(my $line = <$fh>){
-		if($line =~ /\/java\/technologies\/javase\/javase-jdk([0-9]+)-downloads\.html/){  #8
-			$jdk_mv{$1} = $1;
-		}elsif($line =~ /\/java\/technologies\/javase-jdk([0-9]+)-downloads\.html/){  #11, 13
-      $jdk_mv{$1} = $1;
+
+		if($line =~ /(\/java\/technologies\/javase\/javase-jdk([0-9]+)-downloads\.html)/){  #8
+			$jdk_mv{$2} = $1;
+		}elsif($line =~ /(\/java\/technologies\/javase-jdk([0-9]+)-downloads\.html)/){  #11, 13
+      $jdk_mv{$2} = $1;
     }
 	}
 	close $fh;
 
   foreach my $mver (sort keys %jdk_mv){
 
-    $url = 'https://www.oracle.com/java/technologies/javase-jdk'.$mver.'-downloads.html';
+    $url = 'https://www.oracle.com/'.$jdk_mv{$mver};
   	$tmpfile = '/tmp/'.$mver.'.html';
   	&error_setup(&text('install_err3', $url));
   	my %cookie_headers = ('Cookie'=> 'oraclelicense=accept-securebackup-cookie');
-  	&http_download("www.oracle.com", 443,'/java/technologies/javase-jdk'.$mver.'-downloads.html',
+  	&http_download("www.oracle.com", 443, $jdk_mv{$mver},
   					$tmpfile, \$error, undef, 1, undef, undef, 0, 0, 1, \%cookie_headers);
   	if($error){
-  		print 'http_download:'.$error."</br>";
+  		print 'http_download:'.$error."</br>".$url;
   		return %java_tar_gz;
   	}
 
   	open($fh, '<', $tmpfile) or die "open:$!";
   	while(my $line = <$fh>){
+      #data-file='https://download.oracle.com/otn-pub/java/jdk/15.0.1%2B9/51f4f36ad4ef43e39d0dfdbaf6549e32/jdk-15.0.1_linux-x64_bin.tar.gz'
       #data-file='//download.oracle.com/otn-pub/java/jdk/13.0.2+8/d4173c853231432d94f001e99d882ca7/jdk-13.0.2_linux-x64_bin.tar.gz
       #data-file='//download.oracle.com/otn    /java/jdk/11.0.6+8/90eb79fb590d45c8971362673c5ab495/jdk-11.0.6_linux-x64_bin.tar.gz'
+      #data-file='//download.oracle.com/otn    /java/jdk/8u271-b09/61ae65e088624f5aaa0b1d2d801acb16/jdk-8u271-linux-i586.tar.gz'
       #data-file='//download.oracle.com/otn    /java/jdk/8u241-b07/1f5b5a70bf22433b84d0e960903adac8/jdk-8u241-linux-x64.tar.gz
-  		if($line =~ /data\-file='(\/\/download.oracle.com\/otn(?:\-pub)?\/java\/jdk\/([a-z0-9-\.+]+)\/[a-z0-9]+\/jdk\-[a-z0-9-\.]+[_\-]linux-x64(?:_bin)?.tar.gz)/){
+  		if($line =~ /data\-file='(?:https:)?(\/\/download.oracle.com\/otn(?:\-pub)?\/java\/jdk\/([a-zA-Z0-9\-\.+%]+)\/[a-z0-9]+\/jdk\-[a-z0-9\-\.]+[_\-]linux-x64(?:_bin)?.tar.gz)/){
   			$java_tar_gz{$2} = 'https:'.$1;
   			last;
   		}
@@ -246,6 +249,7 @@ sub get_java_version(){
 		$version{'vendor'}  = 'oracle';
 
   #			OpenJDK Runtime Environment (build 11.0.7+10-post-Ubuntu-2ubuntu218.04)
+  #     OpenJDK Runtime Environment (build 11.0.9+11-Ubuntu-0ubuntu1.20.04)
   #     OpenJDK Runtime Environment (build 1.8.0_252-8u252-b09-1~18.04-b09)
   }elsif ($out =~ /Runtime\sEnvironment\s\(build\s((\d+)\.(\d+)\.\d+[\+_](\d+))/) {
     if($2 eq '1'){  #1.8.x
