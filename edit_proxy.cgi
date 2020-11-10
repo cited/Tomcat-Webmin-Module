@@ -117,7 +117,7 @@ if ($in{'submit_flag'}) {
 	$form_submit = 1;
 }
 
-&ui_print_header(undef, $text{'libs_title'}, "");
+&ui_print_header(undef, $text{'proxy_title'}, "");
 
 
 my $proxy_file = get_proxy_file($remote_user);

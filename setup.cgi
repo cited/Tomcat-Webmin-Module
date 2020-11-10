@@ -168,7 +168,7 @@ EOF
 
 	print &ui_table_row($text{'base_installsource'},
 		&ui_radio_table("source", 100,
-			[ [ 100, $text{'base_archive'},  &ui_select("source_archive", undef, \@tver_opts,1, 0)],
+			[ [ 100, $text{'source_archive'},  &ui_select("source_archive", undef, \@tver_opts,1, 0)],
 			  [ 0, $text{'source_local'}, &ui_textbox("file", undef, 40)." ". &file_chooser_button("file", 0) ],
 			  [ 1, $text{'source_uploaded'}, &ui_upload("upload", 40) ],
 			  [ 2, $text{'source_ftp'},&ui_textbox("url", undef, 40) ]
@@ -239,8 +239,9 @@ sub setup_checks{
 #Remove all setup files
 sub setup_cleanup{
 	my $file = $module_root_directory.'/setup.cgi';
-	print "Completing Installation\n";
+	print "Completing Installation</br>";
 	&unlink_file($file);
+	print &js_redirect("index.cgi");
 }
 
 

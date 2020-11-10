@@ -5,7 +5,7 @@ require './tomcat-lib.pl';
 
 &ui_print_header(undef, $text{'wars_title'}, "");
 
-# Show tabs below
+# Show tabs
 @tabs = ( [ "install", $text{'wars_tabinstall'}, "edit_wars.cgi?mode=install" ],
 		  [ "delete", $text{'wars_tabdelete'}, "edit_wars.cgi?mode=delete" ]
 		);

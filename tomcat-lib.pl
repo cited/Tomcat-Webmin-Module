@@ -251,6 +251,35 @@ sub process_file_source{
 	return $file;
 }
 
+sub unzip_file{
+	my $file  = $_[0];
+	my @suffixlist = ('.zip');
+	($lib_name,$path,$lib_suffix) = fileparse($file,@suffixlist);
+
+	my $unzip_dir = "/tmp/.webmin/$lib_name";
+
+	#if old temp extension dir exist, remove it
+	#if( -d $unzip_dir and rmtree($unzip_dir) == 0){
+	#	&error("Failed to remove temp extension dir");
+	#	&ui_print_footer("", $text{'index_return'});
+	#	exit;
+	#}
+	&make_dir($unzip_dir, 0754, 1);
+
+	my $unzip_out;
+	my $unzip_err;
+	print "<hr>Unzipping to $unzip_dir ...<br>";
+	local $out = &execute_command("unzip -u \"$file\" -d \"$unzip_dir\"", undef, \$unzip_out, \$unzip_err, 0, 0);
+
+	if($unzip_err){
+		&error("Error: unzip: $unzip_err");
+	}else{
+		$unzip_out = s/\r\n/<br>/g;
+		print &html_escape($unzip_out);
+	}
+	return $unzip_dir;
+}
+
 sub get_tomcat_major_versions(){
 	my @majors = ('9','8', '7','6');
 	return @majors;
