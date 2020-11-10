@@ -31,7 +31,7 @@ foreach $ver (keys %jdk_version) {
 
 my %openjdk_version = &get_openjdk_versions();
 @opt_avail_openjdk = ();
-foreach $ver (keys %openjdk_version) {
+foreach $ver (reverse sort { $a <=> $b } keys %openjdk_version) {
 	push(@opt_avail_openjdk, [ "$ver=$openjdk_version{$ver}", $ver]);
 }
 

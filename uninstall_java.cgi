@@ -17,7 +17,7 @@ my $def_jdk = is_default_jdk($jdk_dir);
 
 if(($def_jdk == 1) and ($in{'rm_def_jdk'} == 0)){
 
-	&ui_print_header(undef, $text{'delete_title'}, "");
+	&ui_print_header(undef, $text{'java_tabuninstall'}, "");
 	print "Uninstall stopped, since $jdk_dir is default JDK.<br>";
 
 }else{
