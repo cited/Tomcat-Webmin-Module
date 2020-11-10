@@ -229,12 +229,42 @@ sub get_java_version(){
 	local %version;
 	local $out = &backquote_command('java \-version 2>&1');
 
-	if ($out =~ /java\sversion\s\"([0-9]\.([0-9])\.[0-9]_[0-9]+)\"/) {
-		$version{'major'} = $2;
-		$version{'full'} = $1;
+	#Oracle Java <= 8
+	if ($out =~ /Java\(TM\)\sSE\sRuntime\sEnvironment\s\(build\s([0-9]\.([0-9]+)\.[0-9]_([0-9]+)\-([a-z0-9]+))\)/) {
+		$version{'full'} 		= $1;
+		$version{'major'} 	= $2;
+		$version{'release'} = $3;
+		$version{'build'} 	= $4;
+		$version{'vendor'}  = 'oracle';
+
+	#Oracle Java >=12 - Java(TM) SE Runtime Environment (build 12.0.1+12)
+	}elsif ($out =~ /Java\(TM\)\sSE\sRuntime\sEnvironment\s\(build\s((\d+)\.\d+\.\d+\+(\d+))\)/) {
+		$version{'full'} 		= $1;
+		$version{'major'} 	= $2;
+		$version{'release'} = 0;
+		$version{'build'} 	= $3;
+		$version{'vendor'}  = 'oracle';
+
+  #			OpenJDK Runtime Environment (build 11.0.7+10-post-Ubuntu-2ubuntu218.04)
+  #     OpenJDK Runtime Environment (build 1.8.0_252-8u252-b09-1~18.04-b09)
+  }elsif ($out =~ /Runtime\sEnvironment\s\(build\s((\d+)\.(\d+)\.\d+[\+_](\d+))/) {
+    if($2 eq '1'){  #1.8.x
+      $version{'major'} 	= $3;
+      $version{'release'} = $4;
+      $version{'build'} 	= $5;
+    }else{  #11.0.x
+      $version{'major'} 	= $2;
+    	$version{'release'} = $3;
+    	$version{'build'} 	= $4;
+    }
+  	$version{'full'} 		= $1;
+
+  	$version{'vendor'}  = 'openjdk';
 	}else {
-		$version{'major'} = 0;
-		$version{'full'} = $out;
+		$version{'major'} 	= 0;
+		$version{'full'} 		= $out;
+		$version{'release'} = 0;
+		$version{'build'} 	= 0;
 	}
 	return %version;
 }
@@ -270,7 +300,7 @@ sub set_default_java{
 			if($cmd_err){
 				$cmd_err = s/\n/<br>/g;
 				&error("Error: $alt_cmd: $cmd_err");
-			}else{
+			}elsif($cmd_out){
 				$cmd_out = s/\n/<br>/g;
 				print &html_escape($cmd_out);
 			}
