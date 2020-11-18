@@ -8,7 +8,7 @@ Apache Tomcat Module for Webmin.
 
 Install and Manage Apache Tomcat or Manage Existing Installations.
 
-# Install via CDN
+# Install via Webmin
 
 Webmin->Webmin Configuration->Webmin Modules->From ftp or http URL
 
@@ -21,7 +21,7 @@ Go to Servers->Apache Tomcat to complete set up using the setup Wizard (you may 
 As Root:
 
 ```bash
-wget https://raw.githubusercontent.com/cited/Certbot-Webmin-Module/master/scripts/pre-install.sh
+wget https://raw.githubusercontent.com/cited/Tomcat-Webmin-Module/master/scripts/pre-install.sh
 chmod +x pre-install.sh
 ./pre-install.sh
 ```
@@ -45,10 +45,10 @@ Go to Servers->Apache Tomcat (you may need to refresh page)
 # Notes
 
 ## **Ubuntu**
-Tested on Ubuntu 14, 16, and 18
+Tested on Ubuntu 14, 16, 18, and 20
 
 ## **Readhat/Fedora/CentOS**
-Tested on CentOS 6x64 and 7x64
+Tested on CentOS 6, 7, and 8
 
 haveged helps Tomcat start much faster.
 
