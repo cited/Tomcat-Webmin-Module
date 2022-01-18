@@ -134,11 +134,10 @@ sub get_catalina_home(){
 
 sub download_and_install{
 	my $tomcat_ver = $_[0];
-	my $major;
+  my $major = (split /\./, $tomcat_ver)[0];
 
 	#download tomcat archive
-  $major = substr($tomcat_ver, 0,1);
-  $in{'url'} = "https://dlcdn.apache.org/dist/tomcat/tomcat-$major/v$tomcat_ver/bin/apache-tomcat-$tomcat_ver.tar.gz";
+  $in{'url'} = "https://archive.apache.org/dist/tomcat/tomcat-$major/v$tomcat_ver/bin/apache-tomcat-$tomcat_ver.tar.gz";
   $in{'source'} = 2;
 
 	my $tmpfile = process_file_source();
@@ -281,20 +280,40 @@ sub unzip_file{
 }
 
 sub get_tomcat_major_versions(){
-	my @majors = ('9','8', '7','6');
-	return @majors;
-}
-
-sub major_tomcat_versions{
-	my $major = $_[0];	#Tomcat major version 6,7,8,9
-
-	my $url = "https://dlcdn.apache.org/dist/tomcat/tomcat-$major/";
+	my @majors = ();
+  my $url = "https://archive.apache.org/dist/tomcat/";
 	&error_setup(&text('install_err3', $url));
 	my $error = '';
 	my $tmpfile = &transname('tomcat.html');
 
 
-	&http_download('dlcdn.apache.org', 80, "/dist/tomcat/tomcat-$major/", $tmpfile, \$error);
+	&http_download('archive.apache.org', 80, "/dist/tomcat/", $tmpfile, \$error);
+	if($error){
+		error($error);
+	}
+
+	my @latest_versions;
+	open(my $fh, '<', $tmpfile) or die "open:$!";
+	while(my $line = <$fh>){
+		if($line =~ /<a\s+href="tomcat\-([0-9]+)\/">tomcat\-[0-9\.]+\/<\/a>/){
+			push(@majors, $1);
+		}
+	}
+	close $fh;
+
+	return reverse sort sort_version @majors;
+}
+
+sub major_tomcat_versions{
+	my $major = $_[0];	#Tomcat major version 6,7,8,9
+
+	my $url = "https://archive.apache.org/dist/tomcat/tomcat-$major/";
+	&error_setup(&text('install_err3', $url));
+	my $error = '';
+	my $tmpfile = &transname('tomcat.html');
+
+
+	&http_download('archive.apache.org', 80, "/dist/tomcat/tomcat-$major/", $tmpfile, \$error);
 	if($error){
 		error($error);
 	}
