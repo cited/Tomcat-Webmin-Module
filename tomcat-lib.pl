@@ -134,10 +134,9 @@ sub get_catalina_home(){
 
 sub download_and_install{
 	my $tomcat_ver = $_[0];
-	my $major;
+  my $major = (split /\./, $tomcat_ver)[0];
 
 	#download tomcat archive
-  $major = substr($tomcat_ver, 0,1);
   $in{'url'} = "https://archive.apache.org/dist/tomcat/tomcat-$major/v$tomcat_ver/bin/apache-tomcat-$tomcat_ver.tar.gz";
   $in{'source'} = 2;
 
