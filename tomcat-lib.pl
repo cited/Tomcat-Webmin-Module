@@ -281,7 +281,7 @@ sub unzip_file{
 }
 
 sub get_tomcat_major_versions(){
-	my @majors = ('9','8', '7','6');
+	my @majors = ('10','9','8');
 	return @majors;
 }
 
