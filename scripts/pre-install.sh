@@ -29,10 +29,11 @@ function install_webmin(){
 cat >/etc/yum.repos.d/webmin.repo <<EOF
 		[Webmin]
 		name=Webmin Distribution Neutral
-		baseurl=http://download.webmin.com/download/yum
+		#baseurl=https://download.webmin.com/download/yum
+		mirrorlist=https://download.webmin.com/download/yum/mirrorlist
 		enabled=1
+		gpgkey=https://download.webmin.com/jcameron-key.asc
 		gpgcheck=1
-		gpgkey=http://www.webmin.com/jcameron-key.asc
 EOF
 		yum -y install webmin
 
