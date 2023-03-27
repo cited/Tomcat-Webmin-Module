@@ -79,70 +79,36 @@ sub get_latest_jdk_version(){
 
 	my %java_tar_gz;
 	my $cache_file = "$module_config_directory/oracle_version_cache";
-	if(-f $cache_file){
-		read_file_cached($cache_file, \%java_tar_gz);
-
-		if($java_tar_gz{'updated'} >= (time() - 86400)){	#if last update was less than a day ago
-			delete $java_tar_gz{'updated'};	#remove the cache mtime key
-			return %java_tar_gz;
-		}
-	}
-
-
-  my $error;
-  my $url = 'https://www.oracle.com/technetwork/java/javase/downloads/index.html';
-  my $tmpfile = &transname("javase.html");
-  &error_setup(&text('install_err3', $url));
-  &http_download("www.oracle.com", 443, "/technetwork/java/javase/downloads/index.html", $tmpfile, \$error,
-                 undef, 1, undef, 0, 0, 1);
-  if(! -f $tmpfile){
-    return %java_tar_gz;
+  if(-f $cache_file){
+  	read_file_cached($cache_file, \%java_tar_gz);
+		if($java_tar_gz{'updated'} >= (time() - 86400)){        #if last update was less than a day ago
+    	delete $java_tar_gz{'updated'}; #remove the cache mtime key
+      return %java_tar_gz;
+    }
   }
 
-	my %jdk_mv;	#JDK major versions
-	open(my $fh, '<', $tmpfile) or die "open:$!";
-	while(my $line = <$fh>){
+	my $error;
+	my $url = 'https://www.oracle.com/java/technologies/downloads/';
+	$tmpfile = &transname("javase.html");
+	&error_setup(&text('install_err3', $url));
+	&http_download("www.oracle.com", 443, "/java/technologies/downloads/", $tmpfile, \$error,
+					undef, 1, undef, 0, 0, 1);
 
-		if($line =~ /(\/java\/technologies\/javase\/javase-jdk([0-9]+)-downloads\.html)/){  #8
-			$jdk_mv{$2} = $1;
-		}elsif($line =~ /(\/java\/technologies\/javase-jdk([0-9]+)-downloads\.html)/){  #11, 13
-      $jdk_mv{$2} = $1;
-    }
+	open($fh, '<', $tmpfile) or die "open:$!";
+	while(my $line = <$fh>){
+		#https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz
+		if($line =~ /(https:\/\/download.oracle.com\/java\/([0-9]+)\/latest\/jdk-[0-9]+_linux-x64_bin.tar.gz)/){
+		#if($line =~ /"filepath":"(https:\/\/download.oracle.com\/otn-pub\/java\/jdk\/([a-z0-9-\.+]+)\/[a-z0-9]+\/jdk-[a-z0-9-\.]+_linux-x64_bin.tar.gz)/){
+			$java_tar_gz{$2} = $1;
+			#last;
+		}
 	}
 	close $fh;
 
-  foreach my $mver (sort keys %jdk_mv){
-
-    $url = 'https://www.oracle.com/'.$jdk_mv{$mver};
-  	$tmpfile = '/tmp/'.$mver.'.html';
-  	&error_setup(&text('install_err3', $url));
-  	my %cookie_headers = ('Cookie'=> 'oraclelicense=accept-securebackup-cookie');
-  	&http_download("www.oracle.com", 443, $jdk_mv{$mver},
-  					$tmpfile, \$error, undef, 1, undef, undef, 0, 0, 1, \%cookie_headers);
-  	if($error){
-  		print 'http_download:'.$error."</br>".$url;
-  		return %java_tar_gz;
-  	}
-
-  	open($fh, '<', $tmpfile) or die "open:$!";
-  	while(my $line = <$fh>){
-      #data-file='https://download.oracle.com/otn-pub/java/jdk/15.0.1%2B9/51f4f36ad4ef43e39d0dfdbaf6549e32/jdk-15.0.1_linux-x64_bin.tar.gz'
-      #data-file='//download.oracle.com/otn-pub/java/jdk/13.0.2+8/d4173c853231432d94f001e99d882ca7/jdk-13.0.2_linux-x64_bin.tar.gz
-      #data-file='//download.oracle.com/otn    /java/jdk/11.0.6+8/90eb79fb590d45c8971362673c5ab495/jdk-11.0.6_linux-x64_bin.tar.gz'
-      #data-file='//download.oracle.com/otn    /java/jdk/8u271-b09/61ae65e088624f5aaa0b1d2d801acb16/jdk-8u271-linux-i586.tar.gz'
-      #data-file='//download.oracle.com/otn    /java/jdk/8u241-b07/1f5b5a70bf22433b84d0e960903adac8/jdk-8u241-linux-x64.tar.gz
-  		if($line =~ /data\-file='(?:https:)?(\/\/download.oracle.com\/otn(?:\-pub)?\/java\/jdk\/([a-zA-Z0-9\-\.+%]+)\/[a-z0-9]+\/jdk\-[a-z0-9\-\.]+[_\-]linux-x64(?:_bin)?.tar.gz)/){
-  			$java_tar_gz{$2} = 'https:'.$1;
-  			last;
-  		}
-  	}
-  	close $fh;
-  }
-
 	#cache the results
 	$java_tar_gz{'updated'} = time();
-	&write_file($cache_file, \%java_tar_gz);
-	delete $java_tar_gz{'updated'};	#remove the cache mtime key
+  &write_file($cache_file, \%java_tar_gz);
+  delete $java_tar_gz{'updated'}; #remove the cache mtime key
 
 	return %java_tar_gz;
 }
