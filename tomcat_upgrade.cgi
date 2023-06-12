@@ -58,7 +58,7 @@ sub upgrade_tomcat_from_archive{
 
 	setup_catalina_env($latest_ver);
 	#setup_tomcat_users($tomcat_ver);
-	#setup_tomcat_service($tomcat_ver);
+	setup_tomcat_service($tomcat_ver);
 
 	migrate_settings_and_apps($install_ver, $latest_ver, \@installed_apps);
 

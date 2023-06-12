@@ -361,3 +361,34 @@ sub major_tomcat_versions{
 
 	return sort sort_version @latest_versions;
 }
+
+sub setup_tomcat_service{
+	my $tomcat_ver = $_[0];
+	if (&has_command('systemctl')) {
+			
+		copy_source_dest("$module_root_directory/tomcat.service", '/etc/systemd/system/tomcat.service');
+		
+		my $ln = 0;
+		$lref = read_file_lines('/etc/systemd/system/tomcat.service');
+		foreach $line (@$lref){
+			chomp $line;
+			if($line =~ /\$TOMCAT_VER/){	#if its a section start
+				$line =~ s/\$TOMCAT_VER/$tomcat_ver/;
+				@{$lref}[$ln] = $line;
+			}elsif($line =~ /\$CATALINA_HOME/){
+				$line =~ s/\$CATALINA_HOME/\/home\/tomcat\/apache-tomcat-$tomcat_ver/;
+				@{$lref}[$ln] = $line;
+			}
+			$ln=$ln+1;
+		}
+		&flush_file_lines('/etc/systemd/system/tomcat.service');
+		
+		&set_ownership_permissions('root','root', 0555, "/etc/systemd/system/tomcat.service");
+		
+		&backquote_command("systemctl daemon-reload", undef, \$cmd_out, \$cmd_err, 0, 0);
+	}else{
+		copy_source_dest("$module_root_directory/tomcat.init", '/etc/init.d/tomcat');
+		&set_ownership_permissions('root','root', 0555, "/etc/init.d/tomcat");
+	}
+	print "<hr>Setting Tomcat service ...";
+}
