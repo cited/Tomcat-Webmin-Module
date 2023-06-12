@@ -392,3 +392,17 @@ sub setup_tomcat_service{
 	}
 	print "<hr>Setting Tomcat service ...";
 }
+
+sub upgrade_available(){
+	my $tomcat_ver = installed_tomcat_version();
+	my $latest_ver = latest_tomcat_version($tomcat_ver);
+	
+	my @versions = ($tomcat_ver, $latest_ver);
+	@versions = sort sort_version @versions;
+	
+	if($versions[0] != $tomcat_ver){
+		return '';
+	}else {
+		return $latest_ver;
+	}
+}
