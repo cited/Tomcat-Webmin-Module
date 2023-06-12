@@ -54,12 +54,44 @@ sub get_catalina_version
 
 sub tomcat_service_ctl{
 	my $ctl = $_[0];
-	local $out = &execute_command("$config{'tomcat_service'} $ctl", undef, \$cmd_out, \$cmd_err, 0, 0);
+	my $status = '';
 
-	if($cmd_err ne ""){
-		return ($out >> 8, $cmd_err);
+	if (&has_command('systemctl')) {
+		local $out = &execute_command("systemctl $ctl tomcat", undef, \$cmd_out, \$cmd_err, 0, 0);
+
+		if($cmd_err ne ""){
+			$status = $cmd_err;
+		}else{
+			my @kw = ('Main PID', 'Active', 'Tasks','Memory');
+			foreach $k (@kw) {
+				if($cmd_out =~ /$k: (.*)/i){
+					$status .= '<b>'.$k.'</b>: '.$1."</br>";
+				}
+			}			
+		}
+		
+		$running = $out >> 8;
+		if($ctl eq 'status'){
+			# swap running values, to match init.d logic
+			if($running == 0){
+				$running = 1;
+			}elsif($running > 0){
+				$running = 0;
+			}
+		}
+		
+	}else{
+		local $out = &execute_command("/etc/init.d/tomcat $ctl", undef, \$cmd_out, \$cmd_err, 0, 0);
+		
+		$running = $out >> 8;
+		if($cmd_err ne ""){
+			$status = $cmd_err;
+		}else{
+			$status = $cmd_out;
+		}
 	}
-	return ($out >> 8, $cmd_out);
+	
+	return ($running, $status);
 }
 
 sub get_all_war_infos(){
