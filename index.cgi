@@ -60,10 +60,10 @@ if ($running == 1) {
 }
 
 #Check for an update of tomcat, once a day
-my $latest_ver = upgrade_available();
-if($latest_ver){
-	print &ui_buttons_row("tomcat_upgrade.cgi", $text{'index_upgrade'}, "Tomcat will be updated to  $latest_ver. All WARs will be moved and config will be copied to new install!");
-}
-print &ui_buttons_end();
+#my $latest_ver = upgrade_available();
+#if($latest_ver){
+#	print &ui_buttons_row("tomcat_upgrade.cgi", $text{'index_upgrade'}, "Tomcat will be updated to  $latest_ver. All WARs will be moved and config will be copied to new install!");
+#}
+#print &ui_buttons_end();
 
 &ui_print_footer("/", $text{"index"});
