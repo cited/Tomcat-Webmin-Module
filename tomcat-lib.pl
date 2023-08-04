@@ -400,7 +400,7 @@ sub upgrade_available(){
 	my @versions = ($tomcat_ver, $latest_ver);
 	@versions = sort sort_version @versions;
 	
-	if($versions[0] != $tomcat_ver){
+	if($versions[0] eq $tomcat_ver){
 		return '';
 	}else {
 		return $latest_ver;
