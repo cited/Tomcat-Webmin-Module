@@ -89,11 +89,12 @@ sub get_apache_proxy_file(){
 
 sub setup_default_apache_proxy(){
 	my $proxy_file = get_apache_proxy_file();
-
+	my %osinfo = &detect_operating_system();
+	
 	if(-f $proxy_file){
 		return 0;
 	}
-
+	
 	open(my $fh, '>', $proxy_file) or die "open:$!";
 
 	if(	($osinfo{'real_os_type'} =~ /centos/i) or	#CentOS
@@ -173,6 +174,8 @@ EOF
 
 sub setup_checks{
 
+	my %osinfo = &detect_operating_system();
+	
 	#Check for commands
 	if (!&has_command('java')) {
 		print '<p>Warning: Java is not found. Install it manually or from the '.
@@ -181,7 +184,6 @@ sub setup_checks{
 
 	my @pinfo = software::package_info('haveged', undef, );
 	if(!@pinfo){
-		my %osinfo = &detect_operating_system();
 		if( $osinfo{'real_os_type'} =~ /centos/i){	#CentOS
 			@pinfo = software::package_info('epel-release', undef, );
 			if(!@pinfo){
@@ -205,7 +207,7 @@ sub setup_checks{
 
 	my $proxy_file = get_apache_proxy_file();
 	my $www_name = '';
-	my %osinfo = &detect_operating_system();
+	
 	if(	( $osinfo{'real_os_type'} =~ /centos/i) or	#CentOS
 			($osinfo{'real_os_type'} =~ /fedora/i)	){	#Fedora
 		$www_name = 'httpd';
