@@ -26,15 +26,25 @@ function install_webmin(){
 
 	elif [ "${REPO}" == 'rpm' ]; then
 
-cat >/etc/yum.repos.d/webmin.repo <<EOF
-		[Webmin]
-		name=Webmin Distribution Neutral
-		#baseurl=https://download.webmin.com/download/yum
-		mirrorlist=https://download.webmin.com/download/yum/mirrorlist
-		enabled=1
-		gpgkey=https://download.webmin.com/jcameron-key.asc
-		gpgcheck=1
+
+
+
+
+	wget -P/tmp 'https://download.webmin.com/developers-key.asc'
+	rpm --import /tmp/developers-key.asc || true
+	cp -f /tmp/developers-key.asc /etc/pki/rpm-gpg/RPM-GPG-KEY-webmin-developers
+
+  cat >/etc/yum.repos.d/webmin.repo <<EOF
+[Webmin]
+name=Webmin Distribution Neutral
+baseurl=https://download.webmin.com/download/newkey/yum
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-webmin-developers
 EOF
+
+  dnf --nogpgcheck install -y webmin tar rsync
+	
 		yum -y install webmin
 
 	fi
