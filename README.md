@@ -45,22 +45,16 @@ Go to Servers->Apache Tomcat (you may need to refresh page)
 # Notes
 
 ## **Ubuntu**
-Tested on Ubuntu 14, 16, 18, and 20
+Tested on Ubuntu 20 and 22
 
 ## **Readhat/Fedora/CentOS**
 Tested on CentOS 6, 7, and 8
 
-haveged helps Tomcat start much faster.
+## **Rocky Linux**
+Tested on Rocky Linux 9
 
-	yum install epel-release
-	yum install haveged
-	chkconfig haveged on
-  
-## **Debian**
-Tested on Debian 8 and 9
-
-## **FreeBSD**
-tomcat_env doesn't work, because tomcat service(/usr/local/etc/rc.d/tomcat8) is not sourcing the setenv.sh file. Work around is to set tomcat7_java_opts= in service file.
+## **Alma Linux**
+Tested on Alma Linux 9
 
 ## **Arch**
 Install tomcat packages manually and then install module, because Webmin doesn't support pacman. Go to Existing Tomcat Installations below.
