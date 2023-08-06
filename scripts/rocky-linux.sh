@@ -69,8 +69,8 @@ popd
 function install_tomcat_module(){
 pushd /opt/
 
-	/usr/share/libexec/install-module.pl tomcat.wbm.gz
-        fi
+	/usr/libexec/webmin/install-module.pl tomcat.wbm.gz
+       
 popd
         echo -e "Tomcat module is now installed. Go to Servers > Tomcat to complete installation"
 	
@@ -83,4 +83,3 @@ get_deps;
 #install_certbot_module;
 download_tomcat_module;
 install_tomcat_module;
-
