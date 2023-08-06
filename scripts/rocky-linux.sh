@@ -40,7 +40,8 @@ EOF
 
 function install_certbot_module(){
 
-	dnf install certbot python3-certbot-apache -y
+	dnf install epel-release mod_ssl -y
+ 	dnf install certbot python3-certbot-apache -y
 	
 	systemctl restart httpd
 
