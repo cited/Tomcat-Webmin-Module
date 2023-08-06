@@ -34,8 +34,7 @@ EOF
 
   dnf --nogpgcheck install -y webmin tar rsync
 	
-	mkdir -p /etc/webmin/authentic-theme
-	cp -r /var/www/html/portal/*  /etc/webmin/authentic-theme
+	
 }
 
 
