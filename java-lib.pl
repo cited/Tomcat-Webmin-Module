@@ -34,6 +34,7 @@ sub get_openjdk_patterns(){
 	my %rv;
 	if(	($osinfo{'real_os_type'} =~ /centos/i) or	#CentOS
 			($osinfo{'real_os_type'} =~ /fedora/i)	or  #Fedora
+			($osinfo{'real_os_type'} =~ /rocky/i)	or  	# Rocky
 			($osinfo{'real_os_type'} =~ /scientific/i)	){
 
 		$rv{'search'}  = 'openjdk';
