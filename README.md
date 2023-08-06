@@ -18,10 +18,18 @@ Go to Servers->Apache Tomcat to complete set up using the setup Wizard (you may 
 
 # Install via Script
 
-As Root:
+On Ubuntu, as Root:
 
 ```bash
-wget https://raw.githubusercontent.com/cited/Tomcat-Webmin-Module/master/scripts/pre-install.sh
+wget https://raw.githubusercontent.com/cited/Tomcat-Webmin-Module/master/scripts/ubuntu.sh
+chmod +x pre-install.sh
+./pre-install.sh
+```
+
+On Rocky Linux or Alma Linux, as Root:
+
+```bash
+wget https://raw.githubusercontent.com/cited/Tomcat-Webmin-Module/master/scripts/alma-rocky.sh
 chmod +x pre-install.sh
 ./pre-install.sh
 ```
