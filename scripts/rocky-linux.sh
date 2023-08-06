@@ -17,3 +17,21 @@ EOF
 	mkdir -p /etc/webmin/authentic-theme
 	cp -r /var/www/html/portal/*  /etc/webmin/authentic-theme
 }
+
+
+function install_certbot_module(){
+
+	dnf install -y python3-certbot-apache certbot mod_ssl
+	
+	systemctl restart httpd
+
+  pushd /opt/
+    wget --quiet https://github.com/cited/Certbot-Webmin-Module/archive/master.zip
+    unzip master.zip
+    mv Certbot-Webmin-Module-master certbot
+    tar -czf /opt/certbot.wbm.gz certbot
+    rm -rf certbot master.zip
+
+    /usr/libexec/webmin/install-module.pl certbot.wbm.gz
+  popd
+}
