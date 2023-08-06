@@ -72,6 +72,7 @@ sub get_apache_proxy_file(){
 	my %osinfo = &detect_operating_system();
 	if(	( $osinfo{'real_os_type'} =~ /centos/i) or	#CentOS
 			( $osinfo{'real_os_type'} =~ /rocky/i) or	#rocky
+			( $osinfo{'real_os_type'} =~ /alma/i) or	#alma
 			($osinfo{'real_os_type'} =~ /fedora/i)	){	#Fedora
 		if( ! -d '/etc/httpd/'){
 			return 0;
@@ -196,6 +197,7 @@ sub setup_checks{
 	my @pinfo = software::package_info('haveged', undef, );
 	if(!@pinfo){
 		if( ($osinfo{'real_os_type'} =~ /centos/i) or	#CentOS
+				($osinfo{'real_os_type'} =~ /alma/i) or	#Alma
 				($osinfo{'real_os_type'} =~ /rocky/i) ){	#Rocky
 			@pinfo = software::package_info('epel-release', undef, );
 			if(!@pinfo){
@@ -222,6 +224,7 @@ sub setup_checks{
 	
 	if(	( $osinfo{'real_os_type'} =~ /centos/i) or	#CentOS
 			( $osinfo{'real_os_type'} =~ /rocky/i) or	#Rocky
+			( $osinfo{'real_os_type'} =~ /alma/i) or	#Alma
 			($osinfo{'real_os_type'} =~  /fedora/i)	){	#Fedora
 		$www_name = 'httpd';
 
