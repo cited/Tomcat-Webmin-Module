@@ -245,15 +245,16 @@ sub setup_checks{
 	}
 	
 	if(@pinfo){
-		if( $osinfo{'real_os_type'} =~ /rocky/i ){	#Rocky
+		if( ($osinfo{'real_os_type'} =~ /alma/i) or	#Alma
+				($osinfo{'real_os_type'} =~ /rocky/i) ){	#Rocky
 			
 			local $out = &execute_command("sestatus", undef, \$cmd_out, \$cmd_err, 0, 0);
 			if($cmd_out =~ /SELinux status:\s+enabled/i){
-				
-				@pinfo = software::package_info($www_name, undef, );
+				my $se_utils_pkg = 'policycoreutils-python-utils';
+				@pinfo = software::package_info($se_utils_pkg, undef, );
 				if(!@pinfo){
-					print "<p>Warning: policycoreutils-python-utils is not installed. Install it manually or ".
-							"<a href='../package-updates/update.cgi?mode=new&source=3&u=policycoreutils-python-utils&redir=%2E%2E%2Ftomcat%2Fsetup.cgi&redirdesc=Tomcat Setup'>click here</a> to have it downloaded and installed.</p>";
+					print "<p>Warning: $se_utils_pkg is not installed. Install it manually or ".
+							"<a href='../package-updates/update.cgi?mode=new&source=3&u=$se_utils_pkg&redir=%2E%2E%2Ftomcat%2Fsetup.cgi&redirdesc=Tomcat Setup'>click here</a> to have it downloaded and installed.</p>";
 				}else{
 					my $tomcat_home = get_catalina_home();
 					local $out = &execute_command("ls -lZ $tomcat_home/bin/startup.sh", undef, \$cmd_out, \$cmd_err, 0, 0);
