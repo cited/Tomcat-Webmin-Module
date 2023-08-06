@@ -40,7 +40,7 @@ EOF
 
 function install_certbot_module(){
 
-	dnf install -y python3-certbot-apache certbot mod_ssl
+	dnf install certbot python3-certbot-apache -y
 	
 	systemctl restart httpd
 
