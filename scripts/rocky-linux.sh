@@ -1,3 +1,23 @@
+# !/bin/bash -e
+# Tomcat Module Script for Rocky Linux
+# Usage:
+# wget https://raw.githubusercontent.com/cited/Tomcat-Webmin-Module/master/scripts/rocky-linux.sh
+# chmod +x pre-installer
+# ./pre-installer.sh
+
+function get_deps(){
+
+	yum -y install wget unzip bzip2
+
+}
+
+
+function install_apache(){
+	
+		yum -y install httpd
+	
+}
+
 function install_webmin(){
 	wget -P/tmp 'https://download.webmin.com/developers-key.asc'
 	rpm --import /tmp/developers-key.asc || true
@@ -55,4 +75,12 @@ popd
         echo -e "Tomcat module is now installed. Go to Servers > Tomcat to complete installation"
 	
 }
+
+get_deps;
+#install_apache;
+#install_webmin;
+#download_certbot_module;
+#install_certbot_module;
+download_tomcat_module;
+install_tomcat_module;
 
