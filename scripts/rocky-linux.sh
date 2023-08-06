@@ -35,3 +35,24 @@ function install_certbot_module(){
     /usr/libexec/webmin/install-module.pl certbot.wbm.gz
   popd
 }
+
+function download_tomcat_module(){
+pushd /tmp/
+	wget https://github.com/cited/Tomcat-Webmin-Module/archive/master.zip
+	unzip master.zip
+	mv Tomcat-Webmin-Module-master tomcat
+	tar -czf /opt/tomcat.wbm.gz tomcat
+	rm -rf tomcat master.zip
+popd
+}
+
+function install_tomcat_module(){
+pushd /opt/
+
+	/usr/share/libexec/install-module.pl tomcat.wbm.gz
+        fi
+popd
+        echo -e "Tomcat module is now installed. Go to Servers > Tomcat to complete installation"
+	
+}
+
