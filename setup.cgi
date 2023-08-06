@@ -71,7 +71,8 @@ sub get_apache_proxy_file(){
 	my $proxy_file;
 	my %osinfo = &detect_operating_system();
 	if(	( $osinfo{'real_os_type'} =~ /centos/i) or	#CentOS
-		($osinfo{'real_os_type'} =~ /fedora/i)	){	#Fedora
+			( $osinfo{'real_os_type'} =~ /rocky/i) or	#rocky
+			($osinfo{'real_os_type'} =~ /fedora/i)	){	#Fedora
 		if( ! -d '/etc/httpd/'){
 			return 0;
 		}
