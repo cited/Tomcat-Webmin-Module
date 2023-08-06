@@ -11,6 +11,15 @@ function get_deps(){
 
 }
 
+function setup_selinux(){
+	
+  #allow apache port for django app
+  semanage port -a -t http_port_t -p tcp 7800
+  semanage port -m -t http_port_t -p tcp 9000
+
+  setsebool -P httpd_can_network_connect 1
+}
+
 
 function install_apache(){
 	
@@ -80,6 +89,7 @@ get_deps;
 #install_apache;
 #install_webmin;
 #download_certbot_module;
+setup_selinux;
 #install_certbot_module;
 download_tomcat_module;
 install_tomcat_module;
