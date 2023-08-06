@@ -173,6 +173,16 @@ EOF
 	print &ui_form_end([ [ "", $text{'base_installok'} ] ]);
 }
 
+sub setup_selinux{
+	my $tomcat_home = get_catalina_home();
+	
+	local $out = &execute_command("semanage fcontext -a -t bin_t \"$tomcat_home/bin(/.*)?\"", undef, \$cmd_out, \$cmd_err, 0, 0);
+	print &html_escape($cmd_out.$cmd_err);
+	
+	local $out = &execute_command("restorecon -r -v \"$tomcat_home/bin\"", undef, \$cmd_out, \$cmd_err, 0, 0);
+	print &html_escape($cmd_out.$cmd_err);
+}
+
 sub setup_checks{
 
 	my %osinfo = &detect_operating_system();
@@ -230,6 +240,28 @@ sub setup_checks{
 		print "<p>Apache default proxy is not configured. ".
 			  "<a href='./setup.cgi?mode=setup_apache_proxy&return=%2E%2E%2Ftomcat%2Fsetup.cgi&returndesc=Setup&caller=tomcat'>click here</a></p>";
 	}
+	
+	if(@pinfo){
+		if( $osinfo{'real_os_type'} =~ /rocky/i ){	#Rocky
+			
+			local $out = &execute_command("sestatus", undef, \$cmd_out, \$cmd_err, 0, 0);
+			if($cmd_out =~ /SELinux status:\s+enabled/i){
+				
+				@pinfo = software::package_info($www_name, undef, );
+				if(!@pinfo){
+					print "<p>Warning: policycoreutils-python-utils is not installed. Install it manually or ".
+							"<a href='../package-updates/update.cgi?mode=new&source=3&u=policycoreutils-python-utils&redir=%2E%2E%2Ftomcat%2Fsetup.cgi&redirdesc=Tomcat Setup'>click here</a> to have it downloaded and installed.</p>";
+				}else{
+					my $tomcat_home = get_catalina_home();
+					local $out = &execute_command("ls -lZ $tomcat_home/bin/startup.sh", undef, \$cmd_out, \$cmd_err, 0, 0);
+					if($cmd_out !~ /:bin_t:/i){
+						printf "<p>SELinux is enabled. Configured it from ".
+										"<a href='./setup.cgi?mode=setup_selinux&return=%2E%2E%2Ftomcat%2Fsetup.cgi&returndesc=Setup&caller=tomcat'>here</a>.</p>";
+					}
+				}
+			}
+		}
+	}
 	print '<p>If you don\'t see any warning above, you can complete setup from '.
 		  "<a href='setup.cgi?mode=cleanup&return=%2E%2E%2Ftomcat%2F&returndesc=Apache%20Tomcat&caller=tomcat'>here</a></p>";
 }
@@ -263,6 +295,7 @@ if($mode eq "checks"){							setup_checks();
 }elsif($mode eq "tomcat_install"){				install_tomcat_from_archive();
 }elsif($mode eq "tomcat_upgrade"){				upgrade_tomcat_from_archive();
 }elsif($mode eq "setup_apache_proxy"){			setup_default_apache_proxy();
+}elsif($mode eq "setup_selinux"){						setup_selinux();
 }else{
 	print "Error: Invalid setup mode\n";
 }
