@@ -184,7 +184,8 @@ sub setup_checks{
 
 	my @pinfo = software::package_info('haveged', undef, );
 	if(!@pinfo){
-		if( $osinfo{'real_os_type'} =~ /centos/i){	#CentOS
+		if( ($osinfo{'real_os_type'} =~ /centos/i) or	#CentOS
+				($osinfo{'real_os_type'} =~ /rocky/i) ){	#Rocky
 			@pinfo = software::package_info('epel-release', undef, );
 			if(!@pinfo){
 				print "<p>Warning: haveged needs epel-release. Install it manually or ".
@@ -209,7 +210,8 @@ sub setup_checks{
 	my $www_name = '';
 	
 	if(	( $osinfo{'real_os_type'} =~ /centos/i) or	#CentOS
-			($osinfo{'real_os_type'} =~ /fedora/i)	){	#Fedora
+			( $osinfo{'real_os_type'} =~ /rocky/i) or	#Rocky
+			($osinfo{'real_os_type'} =~  /fedora/i)	){	#Fedora
 		$www_name = 'httpd';
 
 	}elsif( ($osinfo{'real_os_type'} =~ /ubuntu/i) or
