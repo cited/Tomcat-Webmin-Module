@@ -297,7 +297,6 @@ if($mode eq "checks"){							setup_checks();
 	exit 0;
 }elsif($mode eq "tomcat_install_form"){			select_tomcat_archive();
 }elsif($mode eq "tomcat_install"){				install_tomcat_from_archive();
-}elsif($mode eq "tomcat_upgrade"){				upgrade_tomcat_from_archive();
 }elsif($mode eq "setup_apache_proxy"){			setup_default_apache_proxy();
 }elsif($mode eq "setup_selinux"){						setup_selinux();
 }else{
