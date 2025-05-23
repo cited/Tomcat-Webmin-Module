@@ -63,7 +63,9 @@ if ($running == 1) {
 #Check for an update of tomcat, once a day
 my $latest_ver = upgrade_available();
 if($latest_ver){
-	print &ui_buttons_row("tomcat_upgrade.cgi", $text{'index_upgrade'}, "Tomcat will be updated to  $latest_ver. All WARs will be moved and config will be copied to new install!");
+	print &ui_buttons_row("tomcat_upgrade.cgi?mode=select_version", $text{'index_upgrade'}, "Tomcat can be updated to  $latest_ver.");
+}elsif($config{'always_show_upgrade_btn'}){
+    print &ui_buttons_row("tomcat_upgrade.cgi?mode=select_version", $text{'index_upgrade'}, "Upgrade Tomcat server");
 }
 print &ui_buttons_end();
 

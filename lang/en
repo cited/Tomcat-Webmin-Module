@@ -1,4 +1,5 @@
 index_title=Tomcat Server
+index_title_upgrade=Tomcat Server Upgrade
 index_root=The root directory is $1.
 
 index_start=Start Server
@@ -104,8 +105,10 @@ base_options=Options
 base_major=Tomcat Major Version
 base_archive=Release
 base_installok=Download
+base_upgradeok=Upgrade
 base_installsource=Install source
 base_desc1=Download an archive of Apache Tomcat Server from Apache website and install it
+base_desc2=Select major and minor versions for upgrade/downgrade. All WARs will be moved and config will be copied to new install!
 
 proxy_title=Proxy
 proxy_add_options=Add proxy

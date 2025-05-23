@@ -1,1 +1,2 @@
 tomcat_config=Path to the Webmin Tomcat module config file,8
+always_show_upgrade_btn=Show upgrade button,1,1-Yes,0-No

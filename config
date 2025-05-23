@@ -1,1 +1,2 @@
 tomcat_config=/etc/webmin/tomcat/config
+always_show_upgrade_btn=0
